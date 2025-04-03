@@ -1,5 +1,5 @@
 let newbtn = document.getElementById('Button1');
-//newbtn.textContent = "DO NOT CLICK ME FOR AMORTIZATION"
+let space = document.getElementById('space')
 let loanAmt = Number(prompt("Please enter your loan amount: "))
 console.log(loanAmt)
 let dwnPmtAmt = Number(prompt("In percentage of total loan your down payment is"));
@@ -8,28 +8,20 @@ console.log(dwnPmtAmt)
 let loanLength = Number(prompt("Is your loan a 30 or 15 year loan"));
 let remainderLoan  = loanAmt - loanAmt*dwnPmtAmt
 let interestRate = 0.0575
-console.log(remainderLoan)
-let m = 0;
-let x = 0;
-let z = 0;
-let u = 0;
-let helpme;
+
 function Amortization (interestRate,remainderLoan,loanLength){ 
-    while(remainderLoan >= 0) {
+    
+    console.log(remainderLoan)
+    for (let i = 0 ; i<remainderLoan; i++) {
+        let newp = document.createElement('p')
+        let month = i;
         // x is principal, r is interest rate, z is total number of payments
-        let MonthlyPayment = (((interestRate / 12) * remainderLoan) / (1 - Math.pow(1 + (interestRate / 12), (loanLength * -12)))).toFixed(2);
-        x = `${loanLength} years`
-        m = `${interestRate}`;
-        z = `${remainderLoan}+${remainderLoan}*${interestRate}`;
-        remainderLoan = (z*loanLength*12) - z;
-        helpme = remainderLoan + u;
-        let monthlybalance = remainderLoan - MonthlyPayment
-        console.log(x)
-        console.log(m)
-        console.log(z)
-        console.log(helpme)
-        
+        let MonthlyPayment = (((interestRate / 12) * remainderLoan) / (1 - Math.pow(1 + (interestRate / 12), (loanLength * -12)))).toFixed(2)
+        let interestPaid = interestRate / 12;
+        let principalPaid = MonthlyPayment-interestPaid;
+        remainderLoan = remainderLoan - principalPaid;
+        newp.innerHTML(`${MonthlyPayment}: Monthly Payment<br>${interestPaid}: Interest Paid<br>${remainderLoan}: Remaining loan`)
+        space.appendChild(newp)
     } 
-}
-Amortization(interestRate,remainderLoan,loanLength)
+} newbtn.onclick(Amortization(interestRate,remainderLoan,loanLength))
 console.log('it works')
